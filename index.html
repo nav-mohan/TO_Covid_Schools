@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vaccination Exemptions in Toronto Schools</title>
+	<script src="https://d3js.org/d3.v4.js"></script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.min.js"></script>
+	<link rel = "stylesheet" href = "style.css">
+</head>
+<body id = 'main-body'>
+	<div id = 'chart'>
+	</div>
+
+	<script type="text/javascript">
+		var url_covid_data = "NeighbourhoodCases.json"
+		var url_school_data = "immunization-coverage-2018-2019.csv"
+
+		var viewboxwidth = 600;
+		var viewboxheight = 500;
+		var margin = {top: 10, right: 10, bottom: 10, left: 10};
+		var width = viewboxwidth - margin.left - margin.right;
+		var height = viewboxheight - margin.top - margin.bottom;
+
+		var boundary_clicked;
+		var marker_clicked;
+
+		var boundaryColor = d3.scaleLinear()
+			.domain([0,20])
+			.clamp(true)
+			.range(["#fff","#409A99"]);
+
+		var markerSize = d3.scaleLinear()
+			.domain([1,30])
+			.clamp(true)
+			.range([1,10]);
+
+		var svg = d3.select("#chart")
+			.append("svg")
+			.attr("viewBox", "0 0 "+ viewboxwidth +" "+ viewboxheight)
+		    .classed("svg-content-responsive", true)
+		    .append("g")
+		    .attr("transform", "translate(" + 40 + "," + 0 + ")"); 
+
+	    var boundary_tooltip = d3.tip()
+	      .attr("class", "boundary-tooltip")
+	      .offset([0, 0])
+	      .html(function(d) { return "<b>"+d.properties.Neighbourhood+"</b>" + "<br/>" + d.properties.Cases + " Cases" });
+	    svg.call(boundary_tooltip);
+
+	    var school_tooltip = d3.tip()
+	      .attr("class", "school-tooltip")
+	      .offset([0, 0])
+	      .html(function(d) { return "<b>"+d['School Name']+"</b>" + "<br/>" + Math.round(avgExempt(d)) + " of " + d['Enrolled population'] + " students"  });
+	    svg.call(school_tooltip);	    
+
+		var g = svg.append("g")
+		var colorBar = g.append("g");
+		var defs = colorBar.append("defs");
+
+		var linearGradient = defs.append("linearGradient")
+			.attr("id","linear-gradient")
+			.attr("x1","0%")
+			.attr("y1","0%")
+			.attr("x2","100%")
+			.attr("y2","0%")
+
+		linearGradient.append("stop")
+			.attr("offset","0%")
+			.attr("stop-color","#fff")
+		linearGradient.append("stop")
+			.attr("offset","100%")
+			.attr("stop-color","#409A99")
+
+		var barWidth = 200
+		var barHeight = 12;
+		var barX = 20;
+		var barY = 60
+
+		colorBar.append("rect")
+			.attr("width",barWidth)
+			.attr("height",barHeight)
+			.attr("x",barX)
+			.attr("y",barY)
+			.attr('stroke',"#aaa")
+			.attr("stroke-width",0.5)
+			.style("fill","url(#linear-gradient)");
+
+		var colorMin = colorBar.append("text")
+			.attr("x",barX)
+			.attr("y",barY-3)
+			.attr("class","bar-text")
+			.text(" ")
+		var colorMax = colorBar.append("text")
+			.attr("x",barX + barWidth - 20)
+			.attr("y",barY-3)
+			.attr("class","bar-text")
+			.text(" ");
+
+		svg.append("text")
+			.attr("class","title")
+			.attr("x",10)
+			.attr("y",35)
+			.style("text-anchor","left")
+			.text("Vaccination Exemptions and COVID-19 Cases")
+
+		var source = svg.append("g")
+		
+		source.append("a")
+			.attr("xlnk:href","https://github.com/nav-mohan/rw-covid-map")
+			.append("text")
+			.attr("class","source-text")
+			.attr("x",480)
+			.attr("y",470)
+			.style("text-anchor","right")
+			.text("Source Code")
+
+		source.append("a")
+			.attr("xlink:href","https://open.toronto.ca/dataset/covid-19-cases-in-toronto/")
+			.append("text")
+			.attr("class","source-text")
+			.attr("x",435)
+			.attr("y",480)
+			.style("text-anchor","right")
+			.text("Data: COVID-19 Cases")
+
+		source.append("a")
+			.attr("xlink:href","https://www.toronto.ca/city-government/data-research-maps/research-reports/public-health-significant-reports/toronto-schools-immunization-coverage-rates/")
+			.append("text")
+			.attr("class","source-text")
+			.attr("x",357)
+			.attr("y",490)
+			.style("text-anchor","right")
+			.text("Data: Vaccination Exemptions in Schools")
+
+		var boundaryLayer = g.append("g").classed("boundary-layer",true);
+		var markerLayer = g.append("g").classed("marker-layer",true);
+
+
+	    d3.queue()
+	    	.defer(d3.json,url_covid_data)
+	    	.defer(d3.csv,url_school_data)
+	    	.await(plotMap);
+
+	    var projMerc = d3.geoMercator()
+	    	.center([-79.35, 43.73])
+	    	.translate([width/2,height/2])
+	    	.scale(60000);
+
+	    var path = d3.geoPath().projection(projMerc);
+
+	    function plotMap (error, boundaryData, markerData){
+
+	    	var covid = boundaryData.features;
+
+	    	console.log(markerData)
+
+	    	boundaryColor.domain([d3.min(covid,caseCount),d3.max(covid,caseCount)])
+	    	console.log(boundaryColor.domain())
+
+	    	markerSize.domain([0,d3.max(markerData,avgExempt)])
+	    	console.log(markerSize.domain())
+
+	    	colorMin.text(d3.min(covid,caseCount))
+	    	colorMax.text(d3.max(covid,caseCount))
+
+	    	boundaryLayer.selectAll("path")
+	    		.data(covid)
+	    		.enter().append("path")
+	    		.attr("d",path)
+	    		// .attr("vector-effect","non-scaling-stroke")
+	    		.style("fill",fillFn)
+				.on("mouseover", function(d){
+					d3.select(this).style("fill","orange")
+					boundary_tooltip.show(d,this)
+					})
+				.on("mouseout",function(d){
+					d3.select(this).style("fill",fillFn(d))
+					boundary_tooltip.hide(d,this)
+				})
+				.on("click", function(d){
+					d3.select(this).style("fill","orange")
+					boundary_tooltip.show(d,this)
+					})
+
+	    	markerLayer.selectAll("circle")
+	    		.data(markerData)
+	    		.enter().append("circle")
+	    		.attr("r",dotFn)
+	    		.attr("cx",function(d){
+	    			coords = projMerc([d.Lng,d.Lat])
+	    			return coords[0];
+	    		})
+	    		.attr("cy",function(d){
+	    			coords = projMerc([d.Lng,d.Lat])
+	    			return coords[1];
+	    		})
+				// .on("mouseover", function(d){
+				// 	d3.select(this).style("fill","#F9D3CF")
+				// 	school_tooltip.show(d,this)
+				// 	})
+				// .on("mouseout",function(d){
+				// 	d3.select(this).style("fill",'#F98363')
+				// 	school_tooltip.hide(d,this)
+				// })
+				.on("click", function(d){
+					if (d&&marker_clicked!=d){
+						marker_clicked=d
+						school_tooltip.show(d,this)
+					}
+					else{
+						marker_clicked=null
+						school_tooltip.hide(d,this)
+					};
+		    	markerLayer.selectAll("circle")
+	    		.style("fill",function(d){
+	    			if (marker_clicked==d){
+	    				return "#000000"
+	    			}
+	    			else{
+	    				return "#F98363"
+	    			}
+	    			})	    	
+					
+				})
+
+	    	};
+
+	    function avgExempt(d){
+	    	// console.log(+d["Enrolled population"]*(+d["DTP Religious exemption rate (%)"] + +d["MMR Religious exemption rate (%)"])/100)
+	    	return +d["Enrolled population"]*(+d["DTP Religious exemption rate (%)"] + +d["MMR Religious exemption rate (%)"])/200;
+	    }
+
+	    function dotFn(d){
+	    	// console.log(markerSize(avgExempt(d)))
+	    	return markerSize(avgExempt(d));
+	    }
+
+	    function caseCount(d){
+	    	return d.properties.Cases;
+	   		}
+
+	    function fillFn(d){
+	    	// console.log(nhCount(d))
+	    	return boundaryColor(caseCount(d))
+	    	}
+
+	</script>
+
+
+</body>
+</html>
