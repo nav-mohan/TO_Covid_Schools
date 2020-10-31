@@ -1,0 +1,263 @@
+body {
+  margin:auto;
+  padding:50px 10px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.serif {
+  font-family: 'Lora', serif;
+}
+.sans-serif {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* choose a light or dark theme to add to the body tag. */
+.dark-theme {
+    background-color: #151515;
+    color: #fbfbfb;
+}
+.light-theme {
+    background-color: white;
+    color: black;
+}
+
+.header , .footer {
+  padding-top:20px;
+  padding-bottom:20px;
+  position: relative;
+  max-width: 70%;
+  left:15%;
+}
+
+.image-lead{
+  padding-top: 20px
+}
+
+.story-body{
+  margin:auto;
+  max-width: 80%;
+}
+
+
+/* text styles */
+
+p.kicker {
+  font-size:1rem;
+  text-transform:uppercase;
+}
+
+.text-center {
+  text-align:center;
+}
+
+h1.headline {
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 0.25rem;
+    margin-top: 1rem;
+    font-weight: 800;
+}
+
+h2.subhead {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    margin-bottom:0;
+    margin-top: 15px;
+    font-weight: 300;
+}
+
+p.body-text {
+    font-size: 1.1rem;
+    line-height: 1.4;
+  margin-top:0;
+  margin-bottom:15px;
+}
+
+h3.section-head {
+  font-size:2rem;
+  margin:0px 0 10px 0;
+  font-weight:700;
+  line-height:1.3;
+}
+
+.byline {
+    font-size: 1.1rem;
+    line-height: 0.75;
+    margin-top: 1.5rem;
+    font-weight: 500;
+}
+
+.date {
+    font-size: 0.85rem;
+    line-height: 1;
+    margin-top: 10px;
+    font-weight:400;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+}
+
+p.notes {
+  font-size:0.85rem;
+}
+
+.boundary-layer {
+	stroke:#aaa;
+	stroke-width:0.5px;
+	vector-effect:non-scaling-stroke;
+}
+
+.marker-layer circle {
+	fill:#F98363;
+	stroke:#000000;
+	stroke-width:0.25px;
+	opacity:0.6;
+	vector-effect:non-scaling-stroke;
+}
+
+svg {
+	background: #FFF1ED
+}
+
+.boundary-tooltip {
+  line-height: 1.2;
+  padding: 6px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.boundary-tooltip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips specifically */
+.boundary-tooltip.n:after {
+  margin: -2px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+.school-tooltip {
+  line-height: 1.2;
+  padding: 6px;
+  background: rgba(26, 137, 86, 0.8);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.school-tooltip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(26, 137, 86,0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips specifically */
+.school-tooltip.n:after {
+  margin: -2px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+.bar-text {
+	font-family: arial;
+	font-size: 10px;
+}
+
+.title {
+    font-size: 18px;
+    fill: #A8A5A4;
+    font-weight: 300;
+    font-family: Arial
+}
+.source-text{
+	font-size: 10px;
+	fill : #147EB2;
+	font-weight: 200;
+	font-family: Arial
+}
+
+@media only screen and (min-width: 500px)
+		{	
+		#chart{
+			position: relative;
+			display: block;
+			max-width: 100%;
+			left:0%;
+		}
+  .image-lead{
+    position: relative;
+    display: block;
+    max-width: 100%;
+    left:0%;
+  }
+  .story{
+    margin:0;
+    max-width: 100%;
+    position: relative;
+    left:0%;
+  }
+}
+
+@media only screen and (min-width: 700px){
+	#chart{
+		position: relative;
+		display: block;
+		max-width: 80%;
+		left:10%;
+	}
+  .image-lead{
+    position: relative;
+    display: block;
+    max-width: 100%;
+    left:0%;
+  }
+  .story{
+    margin:0;
+    max-width: 100%;
+    position: relative;
+    left:0%;
+  }
+
+}
+
+@media only screen and (min-width: 1200px){
+	#chart{
+		position: relative;
+		display: block;
+		max-width: 70%;
+		left:15%;
+	}
+  .image-lead{
+    position: relative;
+    display: block;
+    max-width: 90%;
+    left:5%;
+  }
+
+  .story{
+    margin:0;
+    max-width: 80%;
+    position: relative;
+    left:10%;
+  }
+}

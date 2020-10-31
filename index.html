@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vaccination Exemptions in Toronto Schools</title>
+	<script src="https://d3js.org/d3.v4.js"></script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.min.js"></script>
+	<link rel = "stylesheet" href = "style.css">
+</head>
+<body class = 'light-theme'>
+	<div class = "header">
+		<p class = 'kicker'>COVID</p>
+		<h1 class = 'headline'> Should we be Concerned about Vaccine Exemptions?</h1>
+		<h2 class = 'subhead'> Could vaccine-exempted students lead to a new wave of COVID-19?.</h2>
+		<img class = "image-lead" src = "school.jpg">
+		<p class = "chart-source"></p>
+		<p class = "byline"> By Navaneeth Mohan</p>
+		<p class = "date"> PUBLISHED August, 2020</p>
+	</div>
+
+	<main>
+		<div class = 'story-body'>
+			<div class = 'story'>
+				<p> With public schools set to re-open on September 8th, some experts believe a second wave of Coronavirus is on its way. <a href = "https://www.cp24.com/news/ford-says-he-won-t-hesitate-to-close-schools-if-covid-19-cases-surge-during-second-wave-1.5052397"> Ontario Premier Doug Ford</a> says he will not hesitate to close schools if a second wave were to hit. Even if lock-down measures are not imposed, an already rattled Canadian economy would be severely battered due to people staying home and spending less. </p>
+
+				<p> Despite the risks, the province has decided to fully re-open schools as planned but, with some precautionary measures in place. Students will attend classes only on alternate days and be required to wear masks indoors and outdoors. Physical distancing will also be mandatory. For these students, school life will never be the same until a vaccine is manufactured.</p>
+
+				<p>Although the prospect of a safe vaccine is not anywhere near, should such a vaccine be approved for humans, then the province has a bigger question on hand - should it mandate vaccination of all students? </p>
+
+				<p>Currently, the <a href = "https://www.ontario.ca/laws/statute/90i01">Immunization of School Pupils Act</a>  requires all school students to be vaccinated against measles, mumps, rubella, diphtheria, pertussis, and tetanus. However, under certain religious and philosophical reasons, a parent may choose not to vaccinate their child. The use of <a href ="https://www.bbc.com/news/health-45939514"> gelatine</a> in vaccines has long been condemned by vegetarians, Muslims, and Orthodox Jews. A long-debunked link between MMR vaccines and autism has also been cited by anti-vax parents. Catholics have raised concerns about vaccines that are manufactured using cells derived from human <a href = "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6027112/" >fetuses electively aborted </a> decades ago.</p>
+
+			</div>
+
+			<div id = 'chart'>
+			</div>
+
+			<div class = 'story'>
+				<p> Such anti-vax sentiments have led to outbreaks of measles in Indonesia, United States, and more recently in Samoa. </p>
+
+				<p> Close to home, we have also seen a rise in anti-vax sentiments in recent times. In <a href = "https://www.cbc.ca/news/health/coronavirus-charter-challenge-1.5680988"> Aylmer, Ontario,</a> Vaccine Choice Canada (VCC) is suing the Federal and Provincial government because it considers the COVID-19 pandemic measures as an infringement of basic human rights. <a href ="http://vaccinechoicecanada.com/about/who-we-are-and-what-we-do/"> Vaccine Choice Canada </a> describes itself as a watchdog organization that empowers families to make educated and voluntary decisions about vaccinations. In the past, public health authorities have <a href = "https://www.thestar.com/news/canada/2019/02/27/anti-vaccine-campaign-very-concerning-says-ontarios-health-minister.html">criticized </a> the group for spreading misinformation. </p>
+
+				<p>It is too early to tell whether such anti-vax sentiments will push-back on our fight against COVID-19. It will depend on exactly how the vaccine is manufactured. Considering that one promising vaccine candidate being manufactured in Canada by Medicago uses the <a href = "https://www.bloomberg.com/news/articles/2020-07-31/tobacco-based-covid-vaccine-may-start-clinical-trials-in-weeks">tobacco plant</a> to harvest the vaccine molecules, it is safe to assume that some parents may choose to exempt their children from being vaccinated in fear of such a contentious manufacturing step. Medicago has partnered with tobacco producer Phillip Morris and is building a facility in Quebec City to produce vaccines. </p>
+
+				<p>This begs the question - could anti-vax sentiments combined with the re-opening of public schools cause a second wave of COVID-19? To answer that question, we can begin by looking at <a href = "https://open.toronto.ca/dataset/immunization-coverage-for-students/">past</a> and <a href = "https://open.toronto.ca/dataset/covid-19-cases-in-toronto/">current data</a> from Toronto's open data portal. A neighbourhood wise map shows that Toronto’s eastern and western fringes are the worst affected while the central and southern parts have seen fewer cases. Combining that map with data on the number of unvaccinated students in 2018 gives us good news and bad news. </p>
+
+				<p>Good news - the eastern and western neighbourhood schools have some of the lowest numbers of unvaccinated pupils. </p>
+
+				<p>Bad news - Rosedale Heights School of The Arts within Ward 10. This school ward covers the densely infectious neighbourhoods of Moss Park, North St.James Town, and Church-Yonge Corridor which collectively account for over 500 cases at the time of writing this article.Assuming that the number of unvaccinated pupils is a direct correlation of the prevalent anti-vax sentiments in these neighbourhoods then, this is concerning. If these neighbourhoods have facilitated the rapid spread of COVID-19 in the past and have a prevalence of anti-vax sentiments then, future city-wide vaccination efforts might be futile in these regions and cause a pandemic to linger. </p>
+
+				<p>While it is still too early to tell if these numbers faithfully project onto future scenarios, according to an <a href = "http://angusreid.org/coronavirus-vaccine/">Angus Reid poll</a>, 1 in 5 Ontarians will choose to opt out of COVID-19 vaccinations if it became available and nearly 40% of Canadians are already saying that vaccinations need not be made mandatory in schools.Whether these are concerning to public health officials will depend on the vaccine. How is it manufactured? How effective is it? Will it require recurrent shots? </p>
+
+			</div>
+		</div>
+	</main>
+
+	<div class = 'footer'>
+		<p class = 'notes'> Data and Methods</p>
+		<p class = 'notes'> The analysis is based on publicly available datasets from the Toronto Open Data Portal. The above maps were created by combining the COVID-19 dataset and the 2016 Census Profile dataset. </p>
+		<p class = "notes">The full code can be <a href = "https://github.com/nav-mohan/Toronto-Covid-Income/"> viewed here</a>. </p>
+
+	</div>
+
+	<script type="text/javascript">
+		var url_covid_data = "NeighbourhoodCases.json"
+		var url_school_data = "immunization-coverage-2018-2019.csv"
+
+		var viewboxwidth = 600;
+		var viewboxheight = 500;
+		var margin = {top: 10, right: 10, bottom: 10, left: 10};
+		var width = viewboxwidth - margin.left - margin.right;
+		var height = viewboxheight - margin.top - margin.bottom;
+
+		var boundary_clicked;
+		var marker_clicked;
+
+		var boundaryColor = d3.scaleLinear()
+			.domain([0,20])
+			.clamp(true)
+			.range(["#fff","#409A99"]);
+
+		var markerSize = d3.scaleLinear()
+			.domain([1,30])
+			.clamp(true)
+			.range([1,10]);
+
+		var svg = d3.select("#chart")
+			.append("svg")
+			.attr("viewBox", "0 0 "+ viewboxwidth +" "+ viewboxheight)
+		    .classed("svg-content-responsive", true)
+		    .append("g")
+		    .attr("transform", "translate(" + 40 + "," + 0 + ")"); 
+
+	    var boundary_tooltip = d3.tip()
+	      .attr("class", "boundary-tooltip")
+	      .offset([0, 0])
+	      .html(function(d) { return "<b>"+d.properties.Neighbourhood+"</b>" + "<br/>" + d.properties.Cases + " Cases" });
+	    svg.call(boundary_tooltip);
+
+	    var school_tooltip = d3.tip()
+	      .attr("class", "school-tooltip")
+	      .offset([0, 0])
+	      .html(function(d) { return "<b>"+d['School Name']+"</b>" + "<br/>" + Math.round(avgExempt(d)) + " of " + d['Enrolled population'] + " students"  });
+	    svg.call(school_tooltip);	    
+
+		var g = svg.append("g")
+		var colorBar = g.append("g");
+		var defs = colorBar.append("defs");
+
+		var linearGradient = defs.append("linearGradient")
+			.attr("id","linear-gradient")
+			.attr("x1","0%")
+			.attr("y1","0%")
+			.attr("x2","100%")
+			.attr("y2","0%")
+
+		linearGradient.append("stop")
+			.attr("offset","0%")
+			.attr("stop-color","#fff")
+		linearGradient.append("stop")
+			.attr("offset","100%")
+			.attr("stop-color","#409A99")
+
+		var barWidth = 200
+		var barHeight = 12;
+		var barX = 20;
+		var barY = 60
+
+		colorBar.append("rect")
+			.attr("width",barWidth)
+			.attr("height",barHeight)
+			.attr("x",barX)
+			.attr("y",barY)
+			.attr('stroke',"#aaa")
+			.attr("stroke-width",0.5)
+			.style("fill","url(#linear-gradient)");
+
+// make responsive arrow on colorbar to indicate average income of neighbourhood upon hovering on neighbourhood 
+		var barIndicator = g.append("text")
+			.text("\u25B2")
+			.attr("x",200)
+			.attr("y",barY+barHeight+8)
+			.attr("class","bar-text")
+
+		var barText = g.append("text")
+			.text("")
+			.attr("x",200)
+			.attr("y",barY+barHeight+18)
+			.attr("class","bar-text")
+
+		var hoverScale = d3.scaleLinear()
+			.domain([0,20])
+			.clamp(true)
+			.range([barX,barX+barWidth])
+
+		var colorMin = colorBar.append("text")
+			.attr("x",barX)
+			.attr("y",barY-3)
+			.attr("class","bar-text")
+			.text(" ")
+		var colorMax = colorBar.append("text")
+			.attr("x",barX + barWidth - 20)
+			.attr("y",barY-3)
+			.attr("class","bar-text")
+			.text(" ");
+
+		svg.append("text")
+			.attr("class","title")
+			.attr("x",10)
+			.attr("y",35)
+			.style("text-anchor","left")
+			.text("Vaccination Exemptions and COVID-19 Cases")
+
+		var source = svg.append("g")
+		
+		source.append("a")
+			.attr("xlnk:href","https://github.com/nav-mohan/rw-covid-map")
+			.append("text")
+			.attr("class","source-text")
+			.attr("x",480)
+			.attr("y",470)
+			.style("text-anchor","right")
+			.text("Source Code")
+
+		source.append("a")
+			.attr("xlink:href","https://open.toronto.ca/dataset/covid-19-cases-in-toronto/")
+			.append("text")
+			.attr("class","source-text")
+			.attr("x",435)
+			.attr("y",480)
+			.style("text-anchor","right")
+			.text("Data: COVID-19 Cases")
+
+		source.append("a")
+			.attr("xlink:href","https://www.toronto.ca/city-government/data-research-maps/research-reports/public-health-significant-reports/toronto-schools-immunization-coverage-rates/")
+			.append("text")
+			.attr("class","source-text")
+			.attr("x",357)
+			.attr("y",490)
+			.style("text-anchor","right")
+			.text("Data: Vaccination Exemptions in Schools")
+
+		var boundaryLayer = g.append("g").classed("boundary-layer",true);
+		var markerLayer = g.append("g").classed("marker-layer",true);
+
+	    d3.queue()
+	    	.defer(d3.json,url_covid_data)
+	    	.defer(d3.csv,url_school_data)
+	    	.await(plotMap);
+
+	    var projMerc = d3.geoMercator()
+	    	.center([-79.35, 43.73])
+	    	.translate([width/2,height/2])
+	    	.scale(60000);
+
+	    var path = d3.geoPath().projection(projMerc);
+
+	    function plotMap (error, boundaryData, markerData){
+
+	    	var covid = boundaryData.features;
+
+	    	console.log(markerData)
+
+	    	boundaryColor.domain([d3.min(covid,caseCount),d3.max(covid,caseCount)])
+	    	console.log(boundaryColor.domain())
+
+	    	markerSize.domain([0,d3.max(markerData,avgExempt)])
+	    	console.log(markerSize.domain())
+
+			hoverScale.domain([d3.min(covid,caseCount),d3.max(covid,caseCount)])
+
+	    	colorMin.text(d3.min(covid,caseCount))
+	    	colorMax.text(d3.max(covid,caseCount))
+
+	    	boundaryLayer.selectAll("path")
+	    		.data(covid)
+	    		.enter().append("path")
+	    		.attr("d",path)
+	    		// .attr("vector-effect","non-scaling-stroke")
+	    		.style("fill",fillFn)
+
+				.on("mouseover", function(d){
+					d3.select(this).style("fill","orange")
+					boundary_tooltip.show(d,this)
+					barIndicator.attr("x",hoverScale(d.properties.Cases)-8)
+	    			barText.attr("x",hoverScale(d.properties.Cases)-8)
+	    			barText.text(Math.round(d.properties.Cases))
+					})
+
+				.on("mouseout",function(d){
+					d3.select(this).style("fill",fillFn(d))
+					boundary_tooltip.hide(d,this)
+
+				})
+				.on("click", function(d){
+					d3.select(this).style("fill","orange")
+					boundary_tooltip.show(d,this)
+			    	barIndicator.attr("x",hoverScale(d.properties.Cases)-8)
+			    	barText.attr("x",hoverScale(d.properties.Cases)-8)
+			    	barText.text(Math.round(d.properties.Cases))
+					})
+
+	    	markerLayer.selectAll("circle")
+	    		.data(markerData)
+	    		.enter().append("circle")
+	    		.attr("r",dotFn)
+	    		.attr("cx",function(d){
+	    			coords = projMerc([d.Lng,d.Lat])
+	    			return coords[0];
+	    		})
+	    		.attr("cy",function(d){
+	    			coords = projMerc([d.Lng,d.Lat])
+	    			return coords[1];
+	    		})
+				// .on("mouseover", function(d){
+				// 	d3.select(this).style("fill","#F9D3CF")
+				// 	school_tooltip.show(d,this)
+				// 	})
+				// .on("mouseout",function(d){
+				// 	d3.select(this).style("fill",'#F98363')
+				// 	school_tooltip.hide(d,this)
+				// })
+				.on("click", function(d){
+					if (d&&marker_clicked!=d){
+						marker_clicked=d
+						school_tooltip.show(d,this)
+					}
+					else{
+						marker_clicked=null
+						school_tooltip.hide(d,this)
+					};
+		    	markerLayer.selectAll("circle")
+	    		.style("fill",function(d){
+	    			if (marker_clicked==d){
+	    				return "#000000"
+	    			}
+	    			else{
+	    				return "#F98363"
+	    			}
+	    			})	    	
+					
+				})
+
+	    	};
+
+	    function avgExempt(d){
+	    	// console.log(+d["Enrolled population"]*(+d["DTP Religious exemption rate (%)"] + +d["MMR Religious exemption rate (%)"])/100)
+	    	return +d["Enrolled population"]*(+d["DTP Religious exemption rate (%)"] + +d["MMR Religious exemption rate (%)"])/200;
+	    }
+
+	    function dotFn(d){
+	    	// console.log(markerSize(avgExempt(d)))
+	    	return markerSize(avgExempt(d));
+	    }
+
+	    function caseCount(d){
+	    	return d.properties.Cases;
+	   		}
+
+	    function fillFn(d){
+	    	// console.log(nhCount(d))
+	    	return boundaryColor(caseCount(d))
+	    	}
+
+	</script>
+
+
+</body>
+</html>
